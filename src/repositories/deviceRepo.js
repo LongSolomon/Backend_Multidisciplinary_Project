@@ -16,7 +16,10 @@ const deviceRepo = {
   //UPDATE DEVICE
   Updatingdevicerepo: async (req) => {
     const device = await Device.findById(req.params.id)
-    await device.updateOne({ $set: req.body })
+    const newStatus = !device.status;
+    await device.updateOne({ $set: {
+       status: newStatus 
+    } })
     return
   },
 

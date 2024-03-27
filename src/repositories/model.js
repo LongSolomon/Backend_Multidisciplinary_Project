@@ -43,10 +43,14 @@ const devicesSchema = new mongoose.Schema({
     required: true,
     default: true,
   },
+  ownerID: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  },
 })
 
 const usingHistory = new mongoose.Schema({
-  studentID: {
+  userID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },

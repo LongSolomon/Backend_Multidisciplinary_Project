@@ -19,7 +19,6 @@ const deviceController = {
       res.status(500).json(err);
     }
   },
-
   //UPDATE DEVICE
   updateDevice: async (req, res) => {
     try {

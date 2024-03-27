@@ -30,6 +30,6 @@ app.use(morgan('common')) // khi send API request -> inform in terminal
 app.use('/auth', authRoute)
 app.use('/device', deviceRoute)
 
-app.listen(3500, () => {
+app.listen(4500, () => {
   console.log('server is running ...')
 })
