@@ -19,10 +19,20 @@ const deviceController = {
       res.status(500).json(err);
     }
   },
-  //UPDATE DEVICE
-  updateDevice: async (req, res) => {
+  //TURN ON OR OFF DEVICE BY WEB APP
+  turnonoroffDevice: async (req, res) => {
     try {
       const device = await deviceService.Updatingdevice(req);
+      res.status(200).json("Updated successfully !");
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
+
+  // UPDATE BY DEVICE SENSOR
+  updateDevice: async (req, res) => {
+    try {
+      const device = await deviceService.changedevicestatus(req);
       res.status(200).json("Updated successfully !");
     } catch (err) {
       res.status(500).json(err);
