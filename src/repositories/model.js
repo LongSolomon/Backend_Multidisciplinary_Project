@@ -47,6 +47,16 @@ const devicesSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
+  automode: { // auto or not
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+  type:{ // 0 is lamp, 1 is fan, 2 is buzzer, 3 is nonsense
+    type: Number,
+    required: true,
+    default: 3,
+  },
 })
 
 const usingHistory = new mongoose.Schema({
@@ -62,6 +72,10 @@ const usingHistory = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  data:{
+    type: String,
+    required: true,
+  }
 })
 let Device = mongoose.model('Device', devicesSchema)
 let User = mongoose.model('User', userSchema)

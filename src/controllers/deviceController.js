@@ -22,7 +22,7 @@ const deviceController = {
   //TURN ON OR OFF DEVICE BY WEB APP
   turnonoroffDevice: async (req, res) => {
     try {
-      const device = await deviceService.Updatingdevice(req);
+      const device = await deviceService.Updatingdevice(req.params.id);
       res.status(200).json("Updated successfully !");
     } catch (err) {
       res.status(500).json(err);
@@ -39,6 +39,23 @@ const deviceController = {
     }
   },
 
+  automodeDevice: async (req, res) => {
+    try {
+      const device = await deviceService.changedeviceauto(req);
+      res.status(200).json("Updated successfully !");
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
+  //getdata
+  getdatasensor: async (req, res) => {
+    try {
+      const device = await deviceService.checkdatafordevice(req.params.idsensor,req.params.iddevice,req.params.data);
+      res.status(200).json("send successfully !");
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
   //DELETE DEVICE
   deleteDevice: async (req, res) => {
     try {
@@ -48,6 +65,8 @@ const deviceController = {
       res.status(500).json(err);
     }
   },
+
+
 };
 
 module.exports = deviceController;

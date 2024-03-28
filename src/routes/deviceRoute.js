@@ -18,5 +18,10 @@ router.put("/turnOnOrOff/:id", deviceController.turnonoroffDevice)
 // for example, if the light sensor is working, which lead to turning the light off or on
 router.put("/updatedevice/:id", deviceController.updateDevice)
 
+// AUTOMATIC device <ON/OFF>
+router.put("/autodevice/:id", deviceController.automodeDevice)
+//router.put("/updatedevice/:id", deviceController.updateDevice)
 
+// GETTING data from sensor and change the device status if automode is on
+router.put("/:idsensor/:iddevice/:data", deviceController.getdatasensor);
 module.exports = router;

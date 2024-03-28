@@ -10,10 +10,13 @@ const deviceService =
     finditbyID(id) {
         return deviceRepo.finditbyIDrepo(id); // find a device
     },
-  
+    
+    checkdatafordevice(idsensor,iddevice,data) {
+        return deviceRepo.checkdatafordevicerepo(idsensor,iddevice,data); 
+    },
     //TURN ON OR OFF DEVICE
-    Updatingdevice(req){
-        return deviceRepo.Updatingdevicerepo(req);  
+    Updatingdevice(id){
+        return deviceRepo.Updatingdevicerepo(id);  
     },
     
     //CHANGE DEVICE STATUS BY IOT gateway <from device>
@@ -21,6 +24,9 @@ const deviceService =
         return deviceRepo.changestatus(req);  
     },
 
+    changedeviceauto(req){
+        return deviceRepo.changeautomode(req);  
+    },
     //DELETE DEVICE
     findByIdAndDeleteit(id){
         deviceRepo.findByIdAndDeleteitrepo(id);
