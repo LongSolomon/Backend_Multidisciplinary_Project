@@ -21,7 +21,10 @@ const deviceService =
     Updatingdevice(id){
         return deviceRepo.Updatingdevicerepo(id);  
     },
-    
+    //FEED AUTO TEST
+    upvicestatus(id){
+        return deviceRepo.Upcerepo(id);  
+    },
     //CHANGE DEVICE STATUS BY IOT gateway <from device>
     changedevicestatus(req){
         return deviceRepo.changestatus(req);  

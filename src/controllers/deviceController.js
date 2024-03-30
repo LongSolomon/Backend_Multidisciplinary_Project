@@ -49,6 +49,15 @@ const deviceController = {
     }
   },
 
+  updevi: async (req, res) => {
+    try {
+      const device = await deviceService.upvicestatus(req);
+      res.status(200).json("Updated successfully !");
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
+
   automodeDevice: async (req, res) => {
     try {
       const device = await deviceService.changedeviceauto(req);

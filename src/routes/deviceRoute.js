@@ -27,4 +27,7 @@ router.put("/autodevice/:id", deviceController.automodeDevice)
 
 // GETTING data from sensor and change the device status if automode is on
 router.put("/:idsensor/:iddevice/:data", deviceController.getdatasensor);
+
+//TESTING BY DEPLOY GET FEED AUTO SEND DATA
+router.put("/updatedeviceversion/:id", deviceController.updevi)
 module.exports = router;
