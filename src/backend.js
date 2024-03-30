@@ -27,6 +27,11 @@ app.use(
 app.use(morgan('common')) // khi send API request -> inform in terminal
 
 //ROUTE
+app.get("/", (req, res) => {
+
+  res.send("Welcome")
+  
+} )
 app.use('/auth', authRoute)
 app.use('/device', deviceRoute)
 
