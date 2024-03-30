@@ -13,6 +13,14 @@ const deviceRepo = {
     const device = await Device.findById(id) // find a device
     return device
   },
+
+  getalldevicesrepo: async (id) => {
+    const alldevices = await Device.find({
+      ownerID: id,
+    }) // find a device
+    return alldevices
+  },
+
 // await device.updateOne({ set: {
     //    status: newStatus 
     // } })

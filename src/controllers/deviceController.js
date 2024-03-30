@@ -19,6 +19,16 @@ const deviceController = {
       res.status(500).json(err);
     }
   },
+
+  getAllDevices: async (req, res) => {
+    try {
+      const alldevices = await deviceService.getalldevicess(req.params.id);
+      res.status(200).json(alldevices);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
+
   //TURN ON OR OFF DEVICE BY WEB APP
   turnonoroffDevice: async (req, res) => {
     try {

@@ -8,8 +8,11 @@ router.post("/", deviceController.addADevice);
 //GET A DEVICE
 router.get("/:id", deviceController.getADevice);
 
+//GET ALL DEVICES BELONG TO USER
+router.get("/all/:id", deviceController.getAllDevices);
+
 //DELETE A DEVICE
-router.delete("/:id", deviceController.deleteDevice);
+router.delete("/delete/:id", deviceController.deleteDevice);
 
 //TURN ON/OFF THE DEVICE BY WEB APPLICATION
 router.put("/turnOnOrOff/:id", deviceController.turnonoroffDevice)

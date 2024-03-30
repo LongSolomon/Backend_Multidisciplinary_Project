@@ -10,7 +10,10 @@ const deviceService =
     finditbyID(id) {
         return deviceRepo.finditbyIDrepo(id); // find a device
     },
-    
+    //GET ALL DEVICES
+    getalldevicess(id){
+        return deviceRepo.getalldevicesrepo(id);
+    },
     checkdatafordevice(idsensor,iddevice,data) {
         return deviceRepo.checkdatafordevicerepo(idsensor,iddevice,data); 
     },
