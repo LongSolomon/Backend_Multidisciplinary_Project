@@ -15,19 +15,19 @@ router.get("/all/:id", deviceController.getAllDevices);
 router.delete("/delete/:id", deviceController.deleteDevice);
 
 //TURN ON/OFF THE DEVICE BY WEB APPLICATION
-router.put("/turnOnOrOff/:id", deviceController.turnonoroffDevice)
+router.get("/turnOnOrOff/:id", deviceController.turnonoroffDevice)
 
 // UPDATE <STATUS> THE DEVICE BY DEVICE SENSOR
 // for example, if the light sensor is working, which lead to turning the light off or on
-router.put("/updatedevice/:id", deviceController.updateDevice)
+router.get("/updatedevice/:id", deviceController.updateDevice)
 
 // AUTOMATIC device <ON/OFF>
-router.put("/autodevice/:id", deviceController.automodeDevice)
+router.get("/autodevice/:id", deviceController.automodeDevice)
 //router.put("/updatedevice/:id", deviceController.updateDevice)
 
 // GETTING data from sensor and change the device status if automode is on
-router.put("/:idsensor/:iddevice/:data", deviceController.getdatasensor);
+router.get("/:idsensor/:iddevice/:data", deviceController.getdatasensor);
 
 //TESTING BY DEPLOY GET FEED AUTO SEND DATA
-router.put("/updatedeviceversion/:id", deviceController.updevi)
+router.get("/updatedeviceversion/:id", deviceController.updevi)
 module.exports = router;
