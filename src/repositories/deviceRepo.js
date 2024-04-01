@@ -45,7 +45,7 @@ const deviceRepo = {
         await axios.post(apiUrl, dataToSend, {
             headers: {
                 'Content-Type': 'application/json',
-                'X-AIO-Key': process.env.IO_KEY_ACCOUNT
+                'X-AIO-Key': 'aio_Hfcz93vYzX8gcipHenMa2tJRlJSB'
             }
         });
         console.log('Data sent to Adafruit feed led successfully.');
@@ -66,7 +66,7 @@ const deviceRepo = {
         await axios.post(apiUrl, dataToSend, {
             headers: {
                 'Content-Type': 'application/json',
-                'X-AIO-Key': process.env.IO_KEY_ACCOUNT
+                'X-AIO-Key': 'aio_Hfcz93vYzX8gcipHenMa2tJRlJSB'
             }
         });
         console.log('Data sent to Adafruit feed fan successfully.');
