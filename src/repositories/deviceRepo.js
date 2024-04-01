@@ -102,6 +102,50 @@ const deviceRepo = {
     await device.updateOne({ $set: {
        status: newStatus 
     } })
+    const username = 'amopdz';
+    if (device.type == 0)
+    {
+      feedKey = 'led';
+    if (newStatus) { data = '1'}
+    else {data = '0'}
+    apiUrl = `https://io.adafruit.com/api/v2/${username}/feeds/${feedKey}/data`;
+    dataToSend = {
+        value: data, 
+        created_at: new Date().toISOString() 
+    };
+    try {
+        await axios.post(apiUrl, dataToSend, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-AIO-Key': process.env.IO_KEY_ACCOUNT
+            }
+        });
+        console.log('Data sent to Adafruit feed led successfully.');
+    } catch (error) {
+        console.error('Error sending data to Adafruit feed:', error);
+    }
+    }
+    else if (device.type == 1){
+      feedKey = 'fan';
+    if (newStatus) { data = '80'}
+    else {data = '0'}
+    apiUrl = `https://io.adafruit.com/api/v2/${username}/feeds/${feedKey}/data`;
+    dataToSend = {
+        value: data, 
+        created_at: new Date().toISOString() 
+    };
+    try {
+        await axios.post(apiUrl, dataToSend, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-AIO-Key': process.env.IO_KEY_ACCOUNT
+            }
+        });
+        console.log('Data sent to Adafruit feed fan successfully.');
+    } catch (error) {
+        console.error('Error sending data to Adafruit feed:', error);
+    }
+    }
     return
   },
 
