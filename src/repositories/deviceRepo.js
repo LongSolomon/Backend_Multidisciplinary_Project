@@ -167,7 +167,7 @@ const deviceRepo = {
           await deviceRepo.Updatingdevicerepo(iddevice);
         }
       }
-      else if (Number(data) < 25) {
+      else if (Number(data) < 27.5) {
         if ((device.automode) && (device.status)) {
           await deviceRepo.Updatingdevicerepo(iddevice);
         }
