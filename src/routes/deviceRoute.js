@@ -19,7 +19,7 @@ router.get("/turnOnOrOff/:id", deviceController.turnonoroffDevice)
 
 // UPDATE <STATUS> THE DEVICE BY DEVICE SENSOR
 // for example, if the light sensor is working, which lead to turning the light off or on
-router.get("/updatedevice/:id", deviceController.updateDevice)
+router.get("/updatedevice/:id", deviceController.updevi) //updateDevice
 
 // AUTOMATIC device <ON/OFF>
 router.get("/autodevice/:id", deviceController.automodeDevice)
