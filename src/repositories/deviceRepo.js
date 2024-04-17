@@ -1,4 +1,4 @@
-const { Device } = require('./model')
+const { Device, LogHistory } = require('./model')
 // const dotenv = require('dotenv')
 // dotenv.config()
 const axios = require('axios');
@@ -112,6 +112,20 @@ const deviceRepo = {
         status: newStatus
       }
     })
+      try{
+        const log = new LogHistory({ 
+        device_id: device._id ,
+        device_name: device.deviceName,
+        user: device.ownerID,
+        activity_description: `Device ${device.deviceName} is turned ${newStatus ? 'on' : 'off'}`,
+        time: new Date().toISOString()
+      });
+      await log.save();
+      console.log('Activity logged successfully.');
+    } catch (error) {
+      console.error('Error logging activity:', error);
+    }
+  
     const username = 'amopdz';
     if (device.type == 0) {
       feedKey = 'led';
@@ -133,6 +147,7 @@ const deviceRepo = {
       } catch (error) {
         console.error('Error sending data to Adafruit feed:', error);
       }
+      
     }
     else if (device.type == 1) {
       feedKey = 'fan';
