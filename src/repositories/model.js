@@ -65,22 +65,26 @@ const devicesSchema = new mongoose.Schema({
 })
 
 const usingHistory = new mongoose.Schema({
-  userID: {
+  device_id:{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    // ref: 'Device',
   },
-  deviceID: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Device',
-  },
-  usingTime: {
-    type: Date,
-    required: true,
-  },
-  data: {
+  device_name:{
     type: String,
     required: true,
-  }
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    // ref: 'User',
+  },
+  activity_description:{
+    type: String,
+    required: true,
+  },
+  time: {
+    type: String,
+    required: true,
+  },
 })
 let Device = mongoose.model('Device', devicesSchema)
 let User = mongoose.model('User', userSchema)
