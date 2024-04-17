@@ -34,7 +34,7 @@ app.get("/", (req, res) => {
 } )
 app.use('/auth', authRoute)
 app.use('/device', deviceRoute)
-
+// test branch
 app.listen(4500, () => {
   console.log('server is running ...')
 })
