@@ -8,12 +8,13 @@ const morgan = require('morgan')
 const dotenv = require('dotenv')
 const authRoute = require('./routes/authRoute')
 const deviceRoute = require('./routes/deviceRoute')
+const activityLogRoute = require('./routes/activityLogRoute')
 
 dotenv.config() // do for .env file
 //CONNECT DATABASE
 mongoose
   .connect(process.env.MONGODB_URL) // use .env file
-  .then((success) => console.log('Connect Successfully to MongoDB'))
+  .then((success) => console.log('Connect Successfully to MongoDBz'))
   .catch((err) => console.log(err.message))
 
 app.use(express.urlencoded({ extended: false }))
@@ -34,7 +35,9 @@ app.get("/", (req, res) => {
 } )
 app.use('/auth', authRoute)
 app.use('/device', deviceRoute)
+app.use('/log', activityLogRoute)
 
 app.listen(4500, () => {
   console.log('server is running ...')
+  console.log ('http://localhost:4500')
 })
