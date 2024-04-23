@@ -51,7 +51,7 @@ const deviceController = {
 
   updevi: async (req, res) => {
     try {
-      const device = await deviceService.updeviService(req); //upvicestatus
+      const device = await deviceService.updeviService(req.params.id); //upvicestatus
       res.status(200).json("Updated successfully !");
     } catch (err) {
       res.status(500).json(err);
