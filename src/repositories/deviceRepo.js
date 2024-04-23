@@ -27,60 +27,60 @@ const deviceRepo = {
   //    status: newStatus 
   // } })
   //UPDATE DEVICE 
-  Updatingdevicerepo: async (id) => {
-    const device = await Device.findById(id);
-    const newStatus = !device.status;
-    await device.updateOne({
-      $set: {
-        status: newStatus
-      }
-    })
-    const username = 'amopdz';
-    if (device.type == 0) {
-      feedKey = 'led';
-      if (newStatus) { data = '1' }
-      else { data = '0' }
-      apiUrl = `https://io.adafruit.com/api/v2/${username}/feeds/${feedKey}/data`;
-      dataToSend = {
-        value: data,
-        created_at: new Date().toISOString()
-      };
-      try {
-        await axios.post(apiUrl, dataToSend, {
-          headers: {
-            'Content-Type': 'application/json',
-            'X-AIO-Key': process.env.IO_KEY_ACCOUNT
-          }
-        });
-        console.log('Data sent to Adafruit feed led successfully.');
-      } catch (error) {
-        console.error('Error sending data to Adafruit feed:', error);
-      }
-    }
-    else if (device.type == 1) {
-      feedKey = 'fan';
-      if (newStatus) { data = '80' }
-      else { data = '0' }
-      apiUrl = `https://io.adafruit.com/api/v2/${username}/feeds/${feedKey}/data`;
-      dataToSend = {
-        value: data,
-        created_at: new Date().toISOString()
-      };
-      try {
-        await axios.post(apiUrl, dataToSend, {
-          headers: {
-            'Content-Type': 'application/json',
-            'X-AIO-Key': process.env.IO_KEY_ACCOUNT
-          }
-        });
-        console.log('Data sent to Adafruit feed fan successfully.');
-      } catch (error) {
-        console.error('Error sending data to Adafruit feed:', error);
-      }
-    }
+  // Updatingdevicerepo: async (id) => {
+  //   const device = await Device.findById(id);
+  //   const newStatus = !device.status;
+  //   await device.updateOne({
+  //     $set: {
+  //       status: newStatus
+  //     }
+  //   })
+  //   const username = 'amopdz';
+  //   if (device.type == 0) {
+  //     feedKey = 'led';
+  //     if (newStatus) { data = '1' }
+  //     else { data = '0' }
+  //     apiUrl = `https://io.adafruit.com/api/v2/${username}/feeds/${feedKey}/data`;
+  //     dataToSend = {
+  //       value: data,
+  //       created_at: new Date().toISOString()
+  //     };
+  //     try {
+  //       await axios.post(apiUrl, dataToSend, {
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           'X-AIO-Key': process.env.IO_KEY_ACCOUNT
+  //         }
+  //       });
+  //       console.log('Data sent to Adafruit feed led successfully.');
+  //     } catch (error) {
+  //       console.error('Error sending data to Adafruit feed:', error);
+  //     }
+  //   }
+  //   else if (device.type == 1) {
+  //     feedKey = 'fan';
+  //     if (newStatus) { data = '80' }
+  //     else { data = '0' }
+  //     apiUrl = `https://io.adafruit.com/api/v2/${username}/feeds/${feedKey}/data`;
+  //     dataToSend = {
+  //       value: data,
+  //       created_at: new Date().toISOString()
+  //     };
+  //     try {
+  //       await axios.post(apiUrl, dataToSend, {
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           'X-AIO-Key': process.env.IO_KEY_ACCOUNT
+  //         }
+  //       });
+  //       console.log('Data sent to Adafruit feed fan successfully.');
+  //     } catch (error) {
+  //       console.error('Error sending data to Adafruit feed:', error);
+  //     }
+  //   }
 
-    return
-  },
+  //   return
+  // },
   //CHANGE STATUS
   changestatus: async (req) => {
     const device = await Device.findById(req.params.id);
@@ -104,8 +104,8 @@ const deviceRepo = {
     return
   },
 
-  Upcerepo: async (req) => {
-    const device = await Device.findById(req.params.id);
+  updeviRepo: async (id) => {
+    const device = await Device.findById(id);
     const newStatus = !device.status;
     await device.updateOne({
       $set: {
@@ -151,7 +151,7 @@ const deviceRepo = {
     }
     else if (device.type == 1) {
       feedKey = 'fan';
-      if (newStatus) { data = '80' }
+      if (newStatus) { data = '100' }
       else { data = '0' }
       apiUrl = `https://io.adafruit.com/api/v2/${username}/feeds/${feedKey}/data`;
       dataToSend = {
@@ -170,21 +170,48 @@ const deviceRepo = {
         console.error('Error sending data to Adafruit feed:', error);
       }
     }
+
     return
   },
 
-  checkdatafordevicerepo: async (idsensor, iddevice, data) => {
+  getdatasensorRepo: async (idsensor, iddevice, data) => {
     const device = await Device.findById(iddevice) // find a device
-    if (device.type == 1) {
+    if (device.type == 1) { //temperature - fan control automatic mode
       if (Number(data) > 29) // maybe 29 right ? 
       {
         if ((device.automode) && (!device.status)) {
-          await deviceRepo.Updatingdevicerepo(iddevice);
+          await deviceRepo.updeviRepo(iddevice);
         }
       }
       else if (Number(data) < 27.5) {
         if ((device.automode) && (device.status)) {
-          await deviceRepo.Updatingdevicerepo(iddevice);
+          await deviceRepo.updeviRepo(iddevice);
+        }
+      }
+    }
+    else if (device.type == 0) { // light - lamp
+      if (Number(data) > 29) 
+      {
+        if ((device.automode) && (!device.status)) {
+          await deviceRepo.updeviRepo(iddevice);
+        }
+      }
+      else if (Number(data) < 27.5) {
+        if ((device.automode) && (device.status)) {
+          await deviceRepo.updeviRepo(iddevice);
+        }
+      }
+    }
+    else if (device.type == 2) { // infrared - buzzer
+      if (Number(data) > 29) //
+      {
+        if ((device.automode) && (!device.status)) {
+          await deviceRepo.updeviRepo(iddevice);
+        }
+      }
+      else if (Number(data) < 27.5) {
+        if ((device.automode) && (device.status)) {
+          await deviceRepo.updeviRepo(iddevice);
         }
       }
     }

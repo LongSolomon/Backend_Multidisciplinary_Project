@@ -15,10 +15,9 @@ router.get("/all/:id", deviceController.getAllDevices);
 router.delete("/delete/:id", deviceController.deleteDevice);
 
 //TURN ON/OFF THE DEVICE BY WEB APPLICATION
-router.get("/turnOnOrOff/:id", deviceController.turnonoroffDevice)
+// router.get("/turnOnOrOff/:id", deviceController.turnonoroffDevice)
 
-// UPDATE <STATUS> THE DEVICE BY DEVICE SENSOR
-// for example, if the light sensor is working, which lead to turning the light off or on
+// Turn on or off the device
 router.get("/updatedevice/:id", deviceController.updevi) //updateDevice
 
 // AUTOMATIC device <ON/OFF>

@@ -14,16 +14,16 @@ const deviceService =
     getalldevicess(id){
         return deviceRepo.getalldevicesrepo(id);
     },
-    checkdatafordevice(idsensor,iddevice,data) {
-        return deviceRepo.checkdatafordevicerepo(idsensor,iddevice,data); 
+    getdatasensorService(idsensor,iddevice,data) {
+        return deviceRepo.getdatasensorRepo(idsensor,iddevice,data); 
     },
     //TURN ON OR OFF DEVICE
-    Updatingdevice(id){
-        return deviceRepo.Updatingdevicerepo(id);  
-    },
+    // Updatingdevice(id){
+    //     return deviceRepo.Updatingdevicerepo(id);  
+    // },
     //FEED AUTO TEST
-    upvicestatus(id){
-        return deviceRepo.Upcerepo(id);  
+    updeviService(id){
+        return deviceRepo.updeviRepo(id);  
     },
     //CHANGE DEVICE STATUS BY IOT gateway <from device>
     changedevicestatus(req){

@@ -30,14 +30,14 @@ const deviceController = {
   },
 
   //TURN ON OR OFF DEVICE BY WEB APP
-  turnonoroffDevice: async (req, res) => {
-    try {
-      const device = await deviceService.Updatingdevice(req.params.id);
-      res.status(200).json("Updated successfully !");
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  },
+  // turnonoroffDevice: async (req, res) => {
+  //   try {
+  //     const device = await deviceService.Updatingdevice(req.params.id);
+  //     res.status(200).json("Updated successfully !");
+  //   } catch (err) {
+  //     res.status(500).json(err);
+  //   }
+  // },
 
   // UPDATE BY DEVICE SENSOR
   updateDevice: async (req, res) => {
@@ -51,7 +51,7 @@ const deviceController = {
 
   updevi: async (req, res) => {
     try {
-      const device = await deviceService.upvicestatus(req);
+      const device = await deviceService.updeviService(req); //upvicestatus
       res.status(200).json("Updated successfully !");
     } catch (err) {
       res.status(500).json(err);
@@ -69,7 +69,7 @@ const deviceController = {
   //getdata
   getdatasensor: async (req, res) => {
     try {
-      const device = await deviceService.checkdatafordevice(req.params.idsensor,req.params.iddevice,req.params.data);
+      const device = await deviceService.getdatasensorService(req.params.idsensor,req.params.iddevice,req.params.data);
       res.status(200).json("send successfully !");
     } catch (err) {
       res.status(500).json(err);
