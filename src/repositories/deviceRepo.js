@@ -196,11 +196,7 @@ const deviceRepo = {
           await deviceRepo.updeviRepo(iddevice);
         }
       }
-      else if (Number(data) >70) {
-        if ((device.automode) && (device.status)) {
-          await deviceRepo.updeviRepo(iddevice);
-        }
-      }
+      
     }
     else if (device.type == 2) { // infrared - buzzer
       if (Number(data) == 1) //
