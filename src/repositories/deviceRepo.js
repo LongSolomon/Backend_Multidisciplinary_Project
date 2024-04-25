@@ -203,14 +203,14 @@ const deviceRepo = {
       }
     }
     else if (device.type == 2) { // infrared - buzzer
-      if (Number(data) > 29) //
+      if (Number(data) == 1) //
       {
-        if ((device.automode) && (!device.status)) {
+        if (!device.status) {
           await deviceRepo.updeviRepo(iddevice);
         }
       }
-      else if (Number(data) < 27.5) {
-        if ((device.automode) && (device.status)) {
+      else if (Number(data) == 0) {
+        if (device.status) {
           await deviceRepo.updeviRepo(iddevice);
         }
       }
