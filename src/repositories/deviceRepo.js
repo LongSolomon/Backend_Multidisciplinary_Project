@@ -190,13 +190,13 @@ const deviceRepo = {
       }
     }
     else if (device.type == 0) { // light - lamp
-      if (Number(data) > 29) 
+      if (Number(data) < 30) 
       {
         if ((device.automode) && (!device.status)) {
           await deviceRepo.updeviRepo(iddevice);
         }
       }
-      else if (Number(data) < 27.5) {
+      else if (Number(data) >70) {
         if ((device.automode) && (device.status)) {
           await deviceRepo.updeviRepo(iddevice);
         }
