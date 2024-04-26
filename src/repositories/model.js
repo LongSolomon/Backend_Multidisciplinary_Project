@@ -61,6 +61,15 @@ const devicesSchema = new mongoose.Schema({
     type: Number,
     required: true,
     default: -1,
+  },
+  mode: { //để check mode strong cua fan
+    type: String,
+    required: true,
+    default: -1,
+  },
+  time: { //để check thoi gian thong bao
+    type: String,
+    default: -1,
   }
 })
 
@@ -86,7 +95,31 @@ const usingHistory = new mongoose.Schema({
     required: true,
   },
 })
+
+const noticeAbnormal = new mongoose.Schema({
+  device_id:{
+    type: mongoose.Schema.Types.ObjectId,
+    // ref: 'Device',
+  },
+  device_name:{
+    type: String,
+    required: true,
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    // ref: 'User',
+  },
+  notice_description:{
+    type: String,
+    required: true,
+  },
+  time: {
+    type: String,
+    required: true,
+  },
+})
 let Device = mongoose.model('Device', devicesSchema)
 let User = mongoose.model('User', userSchema)
 let LogHistory = mongoose.model('LogHistory', usingHistory)
-module.exports = { Device, User, LogHistory }
+let Notice = mongoose.model('Notice', noticeAbnormal)
+module.exports = { Device, User, LogHistory, Notice }

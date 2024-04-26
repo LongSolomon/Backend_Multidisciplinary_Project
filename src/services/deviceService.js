@@ -14,6 +14,10 @@ const deviceService =
     getalldevicess(id){
         return deviceRepo.getalldevicesrepo(id);
     },
+
+    getNoticeService(id){
+        return deviceRepo.getNoticeRepo(id);
+    },
     getdatasensorService(idsensor,iddevice,data) {
         return deviceRepo.getdatasensorRepo(idsensor,iddevice,data); 
     },
@@ -22,8 +26,8 @@ const deviceService =
     //     return deviceRepo.Updatingdevicerepo(id);  
     // },
     //FEED AUTO TEST
-    updeviService(id){
-        return deviceRepo.updeviRepo(id);  
+    updeviService(id,mode){
+        return deviceRepo.updeviRepo(id,mode);  
     },
     //CHANGE DEVICE STATUS BY IOT gateway <from device>
     changedevicestatus(req){

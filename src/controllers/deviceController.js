@@ -29,6 +29,15 @@ const deviceController = {
     }
   },
 
+  getNotice: async (req, res) => {
+    try {
+      const allNotices = await deviceService.getNoticeService(req.params.id);
+      res.status(200).json(allNotices);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
+
   //TURN ON OR OFF DEVICE BY WEB APP
   // turnonoroffDevice: async (req, res) => {
   //   try {
@@ -51,7 +60,7 @@ const deviceController = {
 
   updevi: async (req, res) => {
     try {
-      const device = await deviceService.updeviService(req.params.id); //upvicestatus
+      const device = await deviceService.updeviService(req.params.id, req.params.fanmode); //upvicestatus
       res.status(200).json("Updated successfully !");
     } catch (err) {
       res.status(500).json(err);
