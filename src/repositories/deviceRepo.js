@@ -21,7 +21,7 @@ const deviceRepo = {
     return alldevices
   },
   getNoticeRepo: async (id) => {
-    const allNotices = await Device.find({
+    const allNotices = await Notice.find({
       user: id,
     })
     return allNotices
