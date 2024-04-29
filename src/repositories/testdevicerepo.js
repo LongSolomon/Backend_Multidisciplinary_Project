@@ -187,6 +187,7 @@ const deviceRepo = {
         else if (device.type == 0) { return Led.accept(dataSensorPrecessorVisitor, device, Number(data)) }
         else if (device.type == 2) { return Buzzer.accept(dataSensorPrecessorVisitor, device, Number(data)) }
     },
+    //DELETE DEVICE
     findByIdAndDeleteitrepo: async (id) => { await Device.findByIdAndDelete(id); return },
 }
 module.exports = deviceRepo
