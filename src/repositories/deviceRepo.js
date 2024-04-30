@@ -27,7 +27,15 @@ class dataSensorPrecessorVisitor extends DeviceVisitor {
     }
     static async visitFan(device, data, deviceclass) {
         if (data >= 29.5) { //console.log("hello")
-            if (data > 33) {
+            if (data >90) {
+                let nowtime = new Date(); let check = new Date(device.time)
+                if ((nowtime.getTime() - check.getTime()) > (1 * 60 * 1000)) {
+                    let description = `Warning!!! The temperature is now at ${data} celcius degree !! There maybe a fire in your house !!`
+                    await deviceclass.createAbnormalNotice(device, description)
+                    await device.updateOne({ $set: { time: nowtime.toISOString() } })
+                }
+            }
+            else if (data > 33) {
                 let nowtime = new Date(); let check = new Date(device.time)
                 if ((nowtime.getTime() - check.getTime()) > (1 * 60 * 1000)) {
                     let description = ((!device.automode) && (device.mode != '1')) ? `The temperature is really hot now at ${data} celcius degree !! We suggest that you should turn the fan on at the fastest speed with button 1` : `The temperature is now really high at ${data} celcius degree !!`
@@ -53,7 +61,7 @@ class dataSensorPrecessorVisitor extends DeviceVisitor {
     }
     static async visitBuzzer(device, data, deviceclass) {
         if (data == 1) {
-            nowtime = new Date(); check = new Date(device.time)
+            let nowtime = new Date(); let check = new Date(device.time)
             if ((nowtime.getTime() - check.getTime()) > (1 * 60 * 1000)) {
                 description = `Warning !!! the system finds out that there is an abnormal entity in your house, please check the camera nearby ! Or if you do not have any camera, we suggest you go home with police assistence and buy some cameras at our company to protect yourself !!`
                 await deviceclass.createAbnormalNotice(device, description)
