@@ -31,13 +31,13 @@ app.use(morgan('common')) // khi send API request -> inform in terminal
 app.get("/", (req, res) => {
 
   res.send("Welcome")
-  
-} )
+
+})
 app.use('/auth', authRoute)
 app.use('/device', deviceRoute)
 app.use('/log', activityLogRoute)
 
 app.listen(4500, () => {
   console.log('server is running ...')
-  console.log ('http://localhost:4500')
+  console.log('http://localhost:4500')
 })

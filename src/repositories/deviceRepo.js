@@ -17,30 +17,39 @@ class AdafruitPrecessorVisitor extends DeviceVisitor {
         else if (modedim == '0') { data = '0' }
         return await deviceclass.sendingAdafruit(deviceclass.feedkey, data)
     }
-    static async visitBuzzer(device,newStatus, deviceclass) {
-        await AdafruitPrecessorVisitor.visit(AdafruitPrecessorVisitor,device, Led, newStatus)//await AdafruitPrecessorVisitor.visitLed(newStatus, deviceclass)
+    static async visitBuzzer(device, newStatus, deviceclass) {
+        await AdafruitPrecessorVisitor.visit(AdafruitPrecessorVisitor, device, Led, newStatus)//await AdafruitPrecessorVisitor.visitLed(newStatus, deviceclass)
     }
 }
 class dataSensorPrecessorVisitor extends DeviceVisitor {
     static async visitLed(device, data, deviceclass) {
-        if (data < 30) { if ((device.automode) && (!device.status)) { await deviceRepo.updeviRepo(String(device._id), 'led'); } }
+        if (data > 70) {
+            if ((device.automode) && (device.status) && Devices.isInRange(6, 17)) {
+                await deviceRepo.updeviRepo(String(device._id), 'led');
+            }
+        }
+        else if (data < 30) {
+            if ((device.automode) && (!device.status) && (Devices.isInRange(18, 24) || (Devices.isInRange(0, 5)))) {
+                await deviceRepo.updeviRepo(String(device._id), 'led');
+            }
+        }
     }
     static async visitFan(device, data, deviceclass) {
         if (data >= 29.5) { //console.log("hello")
-            if (data >90) {
-                let nowtime = new Date(); let check = new Date(device.time)
-                if ((nowtime.getTime() - check.getTime()) > (1 * 60 * 1000)) {
+            if (data > 90) {
+                Devices.TakeDateAtNow(); let check = new Date(device.time)
+                if ((Devices.updateVietnamDate.getTime() - check.getTime()) > (1 * 60 * 1000)) {
                     let description = `Warning!!! The temperature is now at ${data} celcius degree !! There maybe a fire in your house !!`
                     await deviceclass.createAbnormalNotice(device, description)
-                    await device.updateOne({ $set: { time: nowtime.toISOString() } })
+                    await device.updateOne({ $set: { time: Devices.updateVietnamDate.toISOString() } })
                 }
             }
             else if (data > 33) {
-                let nowtime = new Date(); let check = new Date(device.time)
-                if ((nowtime.getTime() - check.getTime()) > (1 * 60 * 1000)) {
+                Devices.TakeDateAtNow(); let check = new Date(device.time);
+                if ((Devices.updateVietnamDate.getTime() - check.getTime()) > (1 * 60 * 1000)) {
                     let description = ((!device.automode) && (device.mode != '1')) ? `The temperature is really hot now at ${data} celcius degree !! We suggest that you should turn the fan on at the fastest speed with button 1` : `The temperature is now really high at ${data} celcius degree !!`
                     await deviceclass.createAbnormalNotice(device, description)
-                    await device.updateOne({ $set: { time: nowtime.toISOString() } })
+                    await device.updateOne({ $set: { time: Devices.updateVietnamDate.toISOString() } })
                 }
             }//console.log("hello")
             if ((device.automode) && (device.mode != '1')) { await deviceRepo.updeviRepo(String(device._id), 'mot'); }
@@ -49,11 +58,11 @@ class dataSensorPrecessorVisitor extends DeviceVisitor {
         else if ((27.5 <= data) && (data < 28.5)) { if ((device.automode) && (device.mode != '3')) { await deviceRepo.updeviRepo(String(device._id), 'ba'); } }
         else if (data < 27.5) {
             if (data < 20) {
-                let nowtime = new Date(); let check = new Date(device.time)
-                if ((nowtime.getTime() - check.getTime()) > (1 * 60 * 1000)) {
+                Devices.TakeDateAtNow(); let check = new Date(device.time);
+                if ((Devices.updateVietnamDate.getTime() - check.getTime()) > (1 * 60 * 1000)) {
                     let description = ((!device.automode) && (device.mode != '0')) ? `The temperature is really cold now at ${data} celcius degree !! We suggest that you should turn the fan off with button 0` : `The temperature is now really cold at ${data} celcius degree !!`
                     await deviceclass.createAbnormalNotice(device, description)
-                    await device.updateOne({ $set: { time: nowtime.toISOString() } })
+                    await device.updateOne({ $set: { time: Devices.updateVietnamDate.toISOString() } })
                 }
             }
             if ((device.automode) && (device.mode != '0')) { await deviceRepo.updeviRepo(String(device._id), 'khong'); }
@@ -61,11 +70,11 @@ class dataSensorPrecessorVisitor extends DeviceVisitor {
     }
     static async visitBuzzer(device, data, deviceclass) {
         if (data == 1) {
-            let nowtime = new Date(); let check = new Date(device.time)
-            if ((nowtime.getTime() - check.getTime()) > (1 * 60 * 1000)) {
+            Devices.TakeDateAtNow(); let check = new Date(device.time)
+            if ((Devices.updateVietnamDate.getTime() - check.getTime()) > (1 * 60 * 1000)) {
                 description = `Warning !!! the system finds out that there is an abnormal entity in your house, please check the camera nearby ! Or if you do not have any camera, we suggest you go home with police assistence and buy some cameras at our company to protect yourself !!`
                 await deviceclass.createAbnormalNotice(device, description)
-                await device.updateOne({ $set: { time: nowtime.toISOString() } })
+                await device.updateOne({ $set: { time: Devices.updateVietnamDate.toISOString() } })
             }
             if (!device.status) { await deviceRepo.updeviRepo(String(device._id), 'buzzer'); }
         }
@@ -75,6 +84,17 @@ class dataSensorPrecessorVisitor extends DeviceVisitor {
     }
 }
 class Devices {
+    static vietnamTimeZoneOffset = 7 * 60 * 60 * 1000;
+    static updateVietnamDate = new Date();
+    static async TakeDateAtNow() {
+        let date = new Date();
+        Devices.updateVietnamDate = new Date(date.getTime() + Devices.vietnamTimeZoneOffset);
+    }
+    static async isInRange(lowerBound, upperBound) {
+        Devices.TakeDateAtNow();
+        let hourPart = Devices.updateVietnamDate.getUTCHours();
+        return (hourPart >= lowerBound) && (hourPart <= upperBound);
+    }
     static async ChangeAutomode(device) {
         const newmode = !device.automode;
         await device.updateOne({ $set: { automode: newmode } })
@@ -115,7 +135,8 @@ class Devices {
                 status: newStatus,
                 mode: modedim,
                 automode: automatic
-            } })
+            }
+        })
     }
     static async sendingAdafruit(feedkey, data) {
         let apiUrl = `https://io.adafruit.com/api/v2/amopdz/feeds/${feedkey}/data`
