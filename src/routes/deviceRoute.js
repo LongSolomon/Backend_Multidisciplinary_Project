@@ -26,7 +26,7 @@ router.get("/:idsensor/:iddevice/:data", deviceController.getdatasensor);
 // GETTING data from sensor and change the device status if automode is on
 router.post("/post/:idsensor/:iddevice", deviceController.getdatasensorpost);
 
-router.post("/post/log/:iddevice", deviceController.getchangedevicepost);
+router.post("/loging/:iddevice", deviceController.getchangedevicepost);
 //GETTING ALL NOTICE FOR USER
 router.get("/notice/:id", deviceController.getNotice);
 

@@ -74,8 +74,8 @@ const deviceController = {
   },
   getchangedevicepost: async (req, res) => {
     try {
-      const device = await deviceService.getchangedevicepostService(req.params.iddevice, req.body.value);
-      res.status(200).json("send successfully !");
+      await deviceService.getchangedevicepostService(req.params.iddevice, req.body.value);
+      res.status(200).json("sending successfully !");
     } catch (err) {
       res.status(500).json(err);
     }

@@ -207,7 +207,8 @@ const deviceRepo = {
     },
     getchangedevicepostRepo: async (id, data) => {
         const device = await Device.findById(id);
-        newStatus = !device.status;
+        let newStatus = !device.status;
+        let modedim = '0';
         if ((device.type == 1) && (device.status) && (data != '0')) { newStatus = device.status }
         if (device.type == 1) {
             if (data == '40') { modedim = '3' }
@@ -218,8 +219,10 @@ const deviceRepo = {
         else if (device.type == 0) {
             if (data == '0') { newStatus = false }
             else if (data == '1') { newStatus = true }
-            modedim = '5'
+            modedim = '5';
         }
+        /*/ console.log(newStatus)
+        // console.log(device.status)*/
         if (newStatus != device.status) {
             await Devices.update3StaAutoMode(device, newStatus, modedim, false)
             await Devices.createlog(device, newStatus, modedim)
