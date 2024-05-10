@@ -215,7 +215,11 @@ const deviceRepo = {
             else if (data == '100') { modedim = '1' }
             else if (data == '0') { modedim = '0' }
         }
-        else if (device.type == 0) { modedim = '5' }
+        else if (device.type == 0) {
+            if (data == '0') { newStatus = false }
+            else if (data == '1') { newStatus = true }
+            modedim = '5'
+        }
         if ((newStatus != device.status) || (modedim != device.mode)) {
             await Devices.update3StaAutoMode(device, newStatus, modedim, false)
             await Devices.createlog(device, newStatus, modedim)
