@@ -72,7 +72,7 @@ class dataSensorPrecessorVisitor extends DeviceVisitor {
         if (data == 1) {
             Devices.TakeDateAtNow(); let check = new Date(device.time)
             if ((Devices.updateVietnamDate.getTime() - check.getTime()) > (1 * 60 * 1000)) {
-                description = `Warning !!! the system finds out that there is an abnormal entity in your house, please check the camera nearby ! Or if you do not have any camera, we suggest you go home with police assistence and buy some cameras at our company to protect yourself !!`
+                let description = `Warning !!! the system finds out that there is an abnormal entity in your house, please check the camera nearby ! Or if you do not have any camera, we suggest you go home with police assistence and buy some cameras at our company to protect yourself !!`
                 await deviceclass.createAbnormalNotice(device, description)
                 await device.updateOne({ $set: { time: Devices.updateVietnamDate.toISOString() } })
             }
