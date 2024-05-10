@@ -72,6 +72,14 @@ const deviceController = {
       res.status(500).json(err);
     }
   },
+  getchangedevicepost: async (req, res) => {
+    try {
+      const device = await deviceService.getchangedevicepostService(req.params.iddevice, req.body.value);
+      res.status(200).json("send successfully !");
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
   //DELETE DEVICE
   deleteDevice: async (req, res) => {
     try {

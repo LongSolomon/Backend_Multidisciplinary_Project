@@ -153,6 +153,21 @@ class Devices {
             console.error('Error sending data to Adafruit feed:', error);
         }
     }
+    static async Changeupdatedevice(feedkey, data) {
+        let apiUrl = `https://io.adafruit.com/api/v2/amopdz/feeds/${feedkey}/data`
+        let dataToSend = { value: data, };
+        try {
+            await axios.post(apiUrl, dataToSend, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-AIO-Key': process.env.IO_KEY_ACCOUNT
+                }
+            });
+            console.log('Data sent to Adafruit feed ', feedkey, ' successfully.');
+        } catch (error) {
+            console.error('Error sending data to Adafruit feed:', error);
+        }
+    }
 }
 class Led extends Devices {
     static feedkey = 'led'
@@ -189,6 +204,23 @@ const deviceRepo = {
     changeautomode: async (req) => {
         const device = await Device.findById(req.params.id);
         return await Devices.ChangeAutomode(device)
+    },
+    getchangedevicepostRepo: async (id, data) => {
+        const device = await Device.findById(id);
+        newStatus = !device.status;
+        if ((device.type == 1) && (device.status) && (data != '0')) { newStatus = device.status }
+        if (device.type == 1) {
+            if (data == '40') { modedim = '3' }
+            else if (data == '70') { modedim = '2' }
+            else if (data == '100') { modedim = '1' }
+            else if (data == '0') { modedim = '0' }
+        }
+        else if (device.type == 0) { modedim = '5' }
+        if ((newStatus != device.status) || (modedim != device.mode)) {
+            await Devices.update3StaAutoMode(device, newStatus, modedim, false)
+            await Devices.createlog(device, newStatus, modedim)
+        }
+        return
     },
     updeviRepo: async (id, modedim) => {
         const device = await Device.findById(id);
