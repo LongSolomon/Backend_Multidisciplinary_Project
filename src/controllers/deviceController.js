@@ -3,7 +3,7 @@ const deviceController = {
   // ADD A DEVICE
   addADevice: async (req, res) => {
     try {
-      const AnewDevice = await deviceService.addnewdevice(req) 
+      const AnewDevice = await deviceService.addnewdevice(req)
       res.status(200).json(AnewDevice);
     } catch (err) {
       res.status(500).json(err);
@@ -58,7 +58,15 @@ const deviceController = {
   //getdata
   getdatasensor: async (req, res) => {
     try {
-      const device = await deviceService.getdatasensorService(req.params.idsensor,req.params.iddevice,req.params.data);
+      const device = await deviceService.getdatasensorService(req.params.idsensor, req.params.iddevice, req.params.data);
+      res.status(200).json("send successfully !");
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
+  getdatasensorpost: async (req, res) => {
+    try {
+      const device = await deviceService.getdatasensorService(req.params.idsensor, req.params.iddevice, req.body.value);
       res.status(200).json("send successfully !");
     } catch (err) {
       res.status(500).json(err);
