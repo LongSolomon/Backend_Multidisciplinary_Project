@@ -220,7 +220,7 @@ const deviceRepo = {
             else if (data == '1') { newStatus = true }
             modedim = '5'
         }
-        if ((newStatus != device.status) || (modedim != device.mode)) {
+        if (newStatus != device.status) {
             await Devices.update3StaAutoMode(device, newStatus, modedim, false)
             await Devices.createlog(device, newStatus, modedim)
         }
