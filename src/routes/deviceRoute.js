@@ -15,7 +15,7 @@ router.get("/all/:id", deviceController.getAllDevices);
 router.delete("/delete/:id", deviceController.deleteDevice);
 
 // Turn on or off the device
-router.get("/updatedevice/:id/:fanmode", deviceController.updevi) 
+router.get("/updatedevice/:id/:fanmode", deviceController.updevi)
 
 // AUTOMATIC device <ON/OFF>
 router.get("/autodevice/:id", deviceController.automodeDevice)
@@ -23,6 +23,10 @@ router.get("/autodevice/:id", deviceController.automodeDevice)
 // GETTING data from sensor and change the device status if automode is on
 router.get("/:idsensor/:iddevice/:data", deviceController.getdatasensor);
 
+// GETTING data from sensor and change the device status if automode is on
+router.post("/post/:idsensor/:iddevice", deviceController.getdatasensorpost);
+
+router.post("/loging/:iddevice", deviceController.getchangedevicepost);
 //GETTING ALL NOTICE FOR USER
 router.get("/notice/:id", deviceController.getNotice);
 

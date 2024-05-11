@@ -72,7 +72,7 @@ class dataSensorPrecessorVisitor extends DeviceVisitor {
         if (data == 1) {
             Devices.TakeDateAtNow(); let check = new Date(device.time)
             if ((Devices.updateVietnamDate.getTime() - check.getTime()) > (1 * 60 * 1000)) {
-                description = `Warning !!! the system finds out that there is an abnormal entity in your house, please check the camera nearby ! Or if you do not have any camera, we suggest you go home with police assistence and buy some cameras at our company to protect yourself !!`
+                let description = `Warning !!! the system finds out that there is an abnormal entity in your house, please check the camera nearby ! Or if you do not have any camera, we suggest you go home with police assistence and buy some cameras at our company to protect yourself !!`
                 await deviceclass.createAbnormalNotice(device, description)
                 await device.updateOne({ $set: { time: Devices.updateVietnamDate.toISOString() } })
             }
@@ -153,6 +153,21 @@ class Devices {
             console.error('Error sending data to Adafruit feed:', error);
         }
     }
+    static async Changeupdatedevice(feedkey, data) {
+        let apiUrl = `https://io.adafruit.com/api/v2/amopdz/feeds/${feedkey}/data`
+        let dataToSend = { value: data, };
+        try {
+            await axios.post(apiUrl, dataToSend, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-AIO-Key': process.env.IO_KEY_ACCOUNT
+                }
+            });
+            console.log('Data sent to Adafruit feed ', feedkey, ' successfully.');
+        } catch (error) {
+            console.error('Error sending data to Adafruit feed:', error);
+        }
+    }
 }
 class Led extends Devices {
     static feedkey = 'led'
@@ -189,6 +204,30 @@ const deviceRepo = {
     changeautomode: async (req) => {
         const device = await Device.findById(req.params.id);
         return await Devices.ChangeAutomode(device)
+    },
+    getchangedevicepostRepo: async (id, data) => {
+        const device = await Device.findById(id);
+        let newStatus = !device.status;
+        let modedim = '0';
+        if ((device.type == 1) && (device.status) && (data != '0')) { newStatus = device.status }
+        if (device.type == 1) {
+            if (data == '40') { modedim = '3' }
+            else if (data == '70') { modedim = '2' }
+            else if (data == '100') { modedim = '1' }
+            else if (data == '0') { modedim = '0' }
+        }
+        else if (device.type == 0) {
+            if (data == '0') { newStatus = false }
+            else if (data == '1') { newStatus = true }
+            modedim = '5';
+        }
+        /*/ console.log(newStatus)
+        // console.log(device.status)*/
+        if (newStatus != device.status) {
+            await Devices.update3StaAutoMode(device, newStatus, modedim, false)
+            await Devices.createlog(device, newStatus, modedim)
+        }
+        return
     },
     updeviRepo: async (id, modedim) => {
         const device = await Device.findById(id);
