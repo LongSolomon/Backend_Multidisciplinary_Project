@@ -15,12 +15,7 @@ const authService = {
       }
       const token = createJWT(payload)
       res.cookie("jwt",token,{httpOnly:true})
-      return {
-        DT: {
-          accesstoken: token,
-          role: "user"
-        }
-      }
+      return user._id
     }
     throw new Error('Unauthenticated')
   },
