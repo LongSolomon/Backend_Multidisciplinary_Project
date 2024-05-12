@@ -14,6 +14,7 @@ const authService = {
         exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24),
       }
       const token = createJWT(payload)
+      res.cookie("jwt",token,{httpOnly:true})
       return {
         DT: {
           accesstoken: token,

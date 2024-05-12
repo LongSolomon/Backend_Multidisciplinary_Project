@@ -33,9 +33,9 @@ const checkUserJWT = (req,res,next) =>{
         let token = cookies.jwt;
         let decoded = verifyToken(token);
         if(decoded){
-
+            next();
         } else {
-            res.status(401).json()
+            res.status(401).json({message: 'Unauthenticated'})
         }
     } else {
         res.status(401).send('Unauthenticated');
