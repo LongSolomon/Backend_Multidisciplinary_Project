@@ -7,7 +7,10 @@ const authService = {
     }
     const verify = password === user.password
     if (verify) {
-      return user._id
+      return {
+        user:user._id,
+        token: "ha",
+      }
     }
     throw new Error('Unauthenticated')
   },
