@@ -1,4 +1,5 @@
 const authRepo = require('../repositories/authRepo')
+const createJWT = require('../middlewares/jwtaction').createJWT
 const authService = {
   verifyUser: async (username, password) => {
     const user = await authRepo.findUserByUsername(username)
@@ -7,9 +8,17 @@ const authService = {
     }
     const verify = password === user.password
     if (verify) {
+      payload = {
+        username: user.username,
+        role: "user",
+        exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24),
+      }
+      const token = createJWT(payload)
       return {
-        user:user._id,
-        token: "ha",
+        DT: {
+          accesstoken: token,
+          role: "user"
+        }
       }
     }
     throw new Error('Unauthenticated')

@@ -1,12 +1,12 @@
 require('dotenv').config();
 let jwt = require('jsonwebtoken');
 
-const createJWT = () =>{
+const createJWT = (payload) =>{
     let key = process.env.JWT_SECRET;
     let token = null;
     try{
-        token = jwt.sign({data:'foobar'},key);
-        console.log(token);
+        token = jwt.sign(payload,key);
+        // console.log(token);
     } catch(err){
         console.log(err);
     }
@@ -21,9 +21,25 @@ const verifyToken = (token) =>{
             console.log(err);
             // return decoded;
         }
-        console.log('ha')
+        // console.log('ha')
         decoded = result; 
     })
     return decoded;
 }
-module.exports = {createJWT, verifyToken};
+
+const checkUserJWT = (req,res,next) =>{
+    let cookies = req.cookies;
+    if(cookies && cookies.jwt){
+        let token = cookies.jwt;
+        let decoded = verifyToken(token);
+        if(decoded){
+
+        } else {
+            res.status(401).json()
+        }
+    } else {
+        res.status(401).send('Unauthenticated');
+    }
+}
+
+module.exports = {createJWT, verifyToken, checkUserJWT}; 

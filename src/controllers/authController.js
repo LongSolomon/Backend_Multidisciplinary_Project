@@ -5,6 +5,7 @@ const authController = {
     const { username, password } = req.body
     try {
       const verify = await authService.verifyUser(username, password)
+      res.cookie("jwt",verify.DT.accesstoken,{httpOnly:true})
       res.status(200).json(verify)
     } catch (err) {
       res.sendStatus(401)
