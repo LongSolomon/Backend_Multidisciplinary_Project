@@ -46,8 +46,11 @@ app.get("/", (req, res) => {
 
 })
 app.use('/auth', authRoute)
-app.use('/device', checkUserJWT, deviceRoute)
-app.use('/log', checkUserJWT, activityLogRoute)
+app.use('/device', deviceRoute)
+app.use('/log', activityLogRoute)
+// app.use('/device', checkUserJWT, deviceRoute)
+
+// app.use('/log', checkUserJWT, activityLogRoute)
 
 app.listen(4500, () => {
   console.log('server is running ...')

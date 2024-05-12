@@ -13,8 +13,8 @@ const authService = {
         role: "user",
         exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24),
       }
-      const token = createJWT(payload)
-      res.cookie("jwt",token,{httpOnly:true})
+      // const token = createJWT(payload)
+      // res.cookie("jwt",token,{httpOnly:true})
       return user._id
     }
     throw new Error('Unauthenticated')
