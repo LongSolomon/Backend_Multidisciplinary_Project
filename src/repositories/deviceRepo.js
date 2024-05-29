@@ -223,7 +223,7 @@ const deviceRepo = {
         }
         /*/ console.log(newStatus)
         // console.log(device.status)*/
-        if (newStatus != device.status) {
+        if ((device.type == 0) && (newStatus != device.status)) {
             await Devices.update3StaAutoMode(device, newStatus, modedim, false)
             await Devices.createlog(device, newStatus, modedim)
         }
