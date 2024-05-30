@@ -35,7 +35,7 @@ class dataSensorPrecessorVisitor extends DeviceVisitor {
         }
     }
     static async visitFan(device, data, deviceclass) {
-        if (data >= 29.5) { //console.log("hello")
+        if (data >= 30.5) { //console.log("hello")
             if (data > 90) {
                 Devices.TakeDateAtNow(); let check = new Date(device.time)
                 if ((Devices.updateVietnamDate.getTime() - check.getTime()) > (1 * 60 * 1000)) {
@@ -54,9 +54,9 @@ class dataSensorPrecessorVisitor extends DeviceVisitor {
             }//console.log("hello")
             if ((device.automode) && (device.mode != '1')) { await deviceRepo.updeviRepo(String(device._id), 'mot'); }
         }
-        else if ((28.5 <= data) && (data < 29.5)) { if ((device.automode) && (device.mode != '2')) { await deviceRepo.updeviRepo(String(device._id), 'hai'); } }
-        else if ((27.5 <= data) && (data < 28.5)) { if ((device.automode) && (device.mode != '3')) { await deviceRepo.updeviRepo(String(device._id), 'ba'); } }
-        else if (data < 27.5) {
+        else if ((29.5 <= data) && (data < 30.5)) { if ((device.automode) && (device.mode != '2')) { await deviceRepo.updeviRepo(String(device._id), 'hai'); } }
+        else if ((28.5 <= data) && (data < 29.5)) { if ((device.automode) && (device.mode != '3')) { await deviceRepo.updeviRepo(String(device._id), 'ba'); } }
+        else if (data < 28.5) {
             if (data < 20) {
                 Devices.TakeDateAtNow(); let check = new Date(device.time);
                 if ((Devices.updateVietnamDate.getTime() - check.getTime()) > (1 * 60 * 1000)) {
